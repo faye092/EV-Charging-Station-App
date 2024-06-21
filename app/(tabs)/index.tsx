@@ -1,17 +1,20 @@
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
+import GlobalLayout from '../_layout'; 
+import TabLayout from './_layout'; 
+import LoginScreen from '@/components/Screen/LoginScreen/LoginScreen';
 
 import * as SplashScreen from 'expo-splash-screen';
 
 SplashScreen.preventAutoHideAsync();
 
-export default function App() {
+const App = () => {
   const [fontsLoaded, fontError] = useFonts({
-    'Poppins': require('./assets/fonts/Poppins-Regular.ttf'),
-    'Poppins-Medium': require('./assets/fonts/Poppins-SemiBold.ttf'),
-    'Poppins-Bold': require('./assets/fonts/Poppins-Bold.ttf'),
+    'Poppins': require('../../assets/fonts/Poppins-Regular.ttf'),
+    'Poppins-Medium': require('../../assets/fonts/Poppins-SemiBold.ttf'),
+    'Poppins-Bold': require('../../assets/fonts/Poppins-Bold.ttf'),
   });
 
   const onLayoutRootView = useCallback(async () => {
@@ -20,21 +23,26 @@ export default function App() {
     }
   }, [fontsLoaded, fontError]);
 
-  if (!fontsLoaded && !fontError) {
+  if (!fontsLoaded || fontError) {
     return null;
   }
 
   return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
-      <Text style = {{
-        fontFamily: 'Poppins-Medium',
-        fontSize: 20,
-        color: 'black',     
-      }}>Subscribe to Faye!</Text>
+    <SafeAreaView style={styles.container}>
+      <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+        <GlobalLayout>
+          <TabLayout>
+            {/* maincontent */}
+            <View style={styles.content}>
+              <LoginScreen />
+            </View>
+          </TabLayout>
+        </GlobalLayout>
+      </View>
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -42,4 +50,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingTop: 25,
   },
+  content: {
+    flex: 1,
+  },
 });
+
+export default App;
+
