@@ -5,6 +5,7 @@ import { SafeAreaView, StyleSheet, View } from 'react-native';
 import GlobalLayout from '../_layout'; 
 import TabLayout from './_layout'; 
 import LoginScreen from '@/components/Screen/LoginScreen/LoginScreen';
+import useWarmUpBrowser from '@/hooks/warmUpBrowser';
 
 import * as SplashScreen from 'expo-splash-screen';
 
@@ -22,6 +23,8 @@ const App = () => {
       await SplashScreen.hideAsync();
     }
   }, [fontsLoaded, fontError]);
+
+  useWarmUpBrowser();
 
   if (!fontsLoaded || fontError) {
     return null;
