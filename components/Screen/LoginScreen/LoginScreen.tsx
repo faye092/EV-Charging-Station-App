@@ -2,7 +2,7 @@ import React from "react";
 import {View, Text, StyleSheet, Image} from "react-native";
 import Colors from "@/constants/Colors";
 
-const LoginScreen: React.FC = () => {
+const LoginScreen = () => {
   return (
     <View style={styles.container}>
       <Image source={require('./../../../assets/images/logo.png')}
@@ -22,7 +22,7 @@ const LoginScreen: React.FC = () => {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
     textAlign: 'center',
   }
-
 });
 
 export default LoginScreen;
