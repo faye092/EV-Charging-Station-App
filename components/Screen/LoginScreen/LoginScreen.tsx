@@ -1,6 +1,7 @@
 import React from "react";
 import {View, Text, StyleSheet, Image} from "react-native";
 import Colors from "@/constants/Colors";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const LoginScreen = () => {
   return (
@@ -14,11 +15,12 @@ const LoginScreen = () => {
       <View style={{padding:20}}>
         <Text style={styles.heading}>Your Ultimate EV charging Station Finder App</Text>
         <Text style={styles.desc}>Find EV charging station near you, plan trip and so much more in just one click</Text>
-        <View style={styles.button}>
+        <TouchableOpacity style={styles.button}
+        onPress={() =>console.log("Button Clicked")}>
           <Text style={styles.buttonText}>
             Login with Google
           </Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );

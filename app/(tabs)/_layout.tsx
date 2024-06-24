@@ -1,6 +1,5 @@
 import React from 'react';
-import Colors from '@/constants/Colors';  
-import TabHomeScreen from '.';
+import TabHomeScreen from './index';
 
 const TabLayout = () => {
   return <TabHomeScreen />;

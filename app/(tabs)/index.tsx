@@ -1,12 +1,13 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import LoginScreen from '@/components/Screen/LoginScreen/LoginScreen';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const TabHomeScreen = () => {
   return (
-    <View style={styles.content}>
+    <GestureHandlerRootView style={styles.content}>
       <LoginScreen />
-    </View>
+    </GestureHandlerRootView>
   );
 };
 
