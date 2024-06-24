@@ -1,9 +1,10 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import {Stack} from "expo-router";
-import { ClerkProvider, ClerkLoaded, useAuth } from "@clerk/clerk-expo";
+import { ClerkProvider, ClerkLoaded} from "@clerk/clerk-expo";
 import useWarmUpBrowser from "@/hooks/warmUpBrowser";
 import useFontsAndSplashScreen from "@/hooks/useFontsAndSplashScreen";
+import { tokenCache } from "@/constants/TokenCache";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
@@ -13,7 +14,6 @@ if (!publishableKey) {
 
 const RootLayout = () => {
   const {fontsLoaded, fontError} = useFontsAndSplashScreen();
-  const {isSignedIn} = useAuth(); // check if the user is signed in
 
   useWarmUpBrowser();
 
@@ -22,15 +22,15 @@ const RootLayout = () => {
   }
 
   return (
-    <ClerkProvider publishableKey={publishableKey}>
+    <ClerkProvider 
+    publishableKey={publishableKey}
+    tokenCache={tokenCache}
+    >
       <ClerkLoaded>
         <View style={styles.container}>
-          <Stack>
-            {isSignedIn?(
-              <Stack.Screen name="(tabs)" options={{headerShown: false}}/>             
-            ):(
-              <Stack.Screen name="login" options={{headerShown: false}}/>
-            )}           
+          <Stack>          
+            <Stack.Screen name="(tabs)" options={{headerShown: false}}/>                     
+            <Stack.Screen name="login" options={{headerShown: false}}/>        
           </Stack>
         </View>
       </ClerkLoaded>
