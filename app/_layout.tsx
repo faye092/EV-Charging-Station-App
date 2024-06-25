@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import {Stack} from "expo-router";
-import { ClerkProvider, ClerkLoaded} from "@clerk/clerk-expo";
+import { ClerkProvider, ClerkLoaded, SignedIn, SignedOut} from "@clerk/clerk-expo";
 import useWarmUpBrowser from "@/hooks/warmUpBrowser";
 import useFontsAndSplashScreen from "@/hooks/useFontsAndSplashScreen";
 import { tokenCache } from "@/constants/TokenCache";
@@ -28,10 +28,16 @@ const RootLayout = () => {
     >
       <ClerkLoaded>
         <View style={styles.container}>
+          <SignedIn>
           <Stack>          
-            <Stack.Screen name="(tabs)" options={{headerShown: false}}/>                     
+            <Stack.Screen name="(tabs)" options={{headerShown: false}}/>                           
+          </Stack>
+          </SignedIn>
+          <SignedOut>
+          <Stack>                              
             <Stack.Screen name="login" options={{headerShown: false}}/>        
           </Stack>
+          </SignedOut>
         </View>
       </ClerkLoaded>
     </ClerkProvider>
