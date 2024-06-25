@@ -1,10 +1,10 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
-import {Stack} from "expo-router";
-import { ClerkProvider, ClerkLoaded, SignedIn, SignedOut} from "@clerk/clerk-expo";
+import React, { useEffect } from "react";
+import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo";
+import { Slot } from "expo-router";
 import useWarmUpBrowser from "@/hooks/warmUpBrowser";
 import useFontsAndSplashScreen from "@/hooks/useFontsAndSplashScreen";
 import { tokenCache } from "@/constants/TokenCache";
+import * as WebBrowser from 'expo-web-browser';
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
@@ -13,9 +13,13 @@ if (!publishableKey) {
 }
 
 const RootLayout = () => {
-  const {fontsLoaded, fontError} = useFontsAndSplashScreen();
+  const { fontsLoaded, fontError } = useFontsAndSplashScreen();
 
   useWarmUpBrowser();
+
+  useEffect(() => {
+    WebBrowser.maybeCompleteAuthSession();
+  }, []);
 
   if (!fontsLoaded || fontError) {
     return null;
@@ -23,32 +27,14 @@ const RootLayout = () => {
 
   return (
     <ClerkProvider 
-    publishableKey={publishableKey}
-    tokenCache={tokenCache}
+      publishableKey={publishableKey}
+      tokenCache={tokenCache}
     >
       <ClerkLoaded>
-        <View style={styles.container}>
-          <SignedIn>
-          <Stack>          
-            <Stack.Screen name="(tabs)" options={{headerShown: false}}/>                           
-          </Stack>
-          </SignedIn>
-          <SignedOut>
-          <Stack>                              
-            <Stack.Screen name="login" options={{headerShown: false}}/>        
-          </Stack>
-          </SignedOut>
-        </View>
+        <Slot />
       </ClerkLoaded>
     </ClerkProvider>
-    
   );
 };
 
-const styles = StyleSheet.create({
-  container:{
-    flex:1,
-  },  
-});
-
-export default RootLayout;  
+export default RootLayout;

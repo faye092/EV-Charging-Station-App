@@ -1,20 +1,25 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import LoginScreen from '@/components/Screen/LoginScreen/LoginScreen';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet } from 'react-native';
+import { useUser } from "@clerk/clerk-expo";
 
-const TabHomeScreen = () => {
+export default function TabHomeScreen() {
+  const { user } = useUser();
+
   return (
-    <GestureHandlerRootView style={styles.content}>
-      <LoginScreen />
-    </GestureHandlerRootView>
+    <View style={styles.container}>
+      <Text style={styles.text}>Welcome, {user?.emailAddresses[0].emailAddress}!</Text>
+    </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  content: {
+  container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 18,
+    fontFamily: 'Poppins',
   },
 });
-
-export default TabHomeScreen;
