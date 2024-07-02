@@ -2,33 +2,28 @@ import React, { useCallback, useState } from "react";
 import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useOAuth } from "@clerk/clerk-expo";
-import { useNavigation } from "expo-router";
+import { useRouter } from "expo-router";
 import Colors from "@/constants/Colors";
 
 const LoginScreen = () => {
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
-  const navigation = useNavigation();
-  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
-  const onPress = useCallback(async () => {
+  const onPress = async () => {
     try {
-      setIsLoading(true);
       const { createdSessionId, signIn, signUp } = await startOAuthFlow();
 
       if (createdSessionId) {
-        console.log('User signed in successfully');
-        navigation.navigate('(tabs)' as never);
+        router.push("/(tabs)");
       } else {
         // Use signIn or signUp for next steps such as MFA
-        console.log('Additional steps required');
       }
     } catch (err) {
       console.error("OAuth error", err);
       // can show an error message to the user here
-    } finally {
-      setIsLoading(false);
-    }
-  }, [startOAuthFlow, navigation]);
+    };
+  };
+  
 
   return (
     <View style={styles.container}>
@@ -46,15 +41,10 @@ const LoginScreen = () => {
         <TouchableOpacity 
           style={styles.button}
           onPress={onPress}
-          disabled={isLoading}
         >
-          {isLoading ? (
-            <ActivityIndicator color={Colors.WHITE} />
-          ) : (
             <Text style={styles.buttonText}>
               Login with Google
             </Text>
-          )}
         </TouchableOpacity>
       </View>
     </View>

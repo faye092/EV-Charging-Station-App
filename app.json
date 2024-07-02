@@ -29,7 +29,11 @@
     },
     "plugins": [
       "expo-router",
-      "expo-font"
+      "expo-font",
+      "expo-location",
+      {
+        "locationAlwaysAndWhenInUsePermission": "Allow EV Charging Station App to use your location."
+      }
     ],
     "experiments": {
       "typedRoutes": true

@@ -1,16 +1,12 @@
-import React from "react";
-import { Redirect, Slot } from "expo-router";
-import { SignedIn, SignedOut } from "@clerk/clerk-expo";
+import { Redirect, Stack } from "expo-router";
+import { useAuth } from "@clerk/clerk-expo";
 
-export default function AuthLayout() {
-  return (
-    <>
-      <SignedIn>
-        <Redirect href="/(tabs)" />
-      </SignedIn>
-      <SignedOut>
-        <Slot />
-      </SignedOut>
-    </>
-  );
+export default function AuthRoutesLayout() {
+  const { isSignedIn } = useAuth();
+  
+  if (isSignedIn) {
+    return <Redirect href="/" />;
+  }
+  
+  return <Stack />;
 }

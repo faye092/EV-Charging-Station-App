@@ -1,13 +1,27 @@
 import React from 'react';
+import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
+import { Link } from 'expo-router';
 import { View, Text, StyleSheet } from 'react-native';
-import { useUser } from "@clerk/clerk-expo";
+import LoginScreen from '@/components/Screen/LoginScreen/LoginScreen';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function TabHomeScreen() {
-  const { user } = useUser();
-
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Welcome, {user?.emailAddresses[0].emailAddress}!</Text>
+      <SignedIn>
+        <GestureHandlerRootView style={styles.content}>
+          <LoginScreen />
+        </GestureHandlerRootView>
+      </SignedIn>
+      
+      <SignedOut>
+        <Link href="/sign-in">
+          <Text>Sign In</Text>
+        </Link>
+        <Link href="/sign-up">
+          <Text>Sign Up</Text>
+        </Link>
+      </SignedOut>
     </View>
   );
 }
@@ -21,5 +35,8 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     fontFamily: 'Poppins',
+  },
+  content: {
+    flex: 1,
   },
 });

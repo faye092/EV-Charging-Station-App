@@ -3,7 +3,7 @@ import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo";
 import { Slot } from "expo-router";
 import useWarmUpBrowser from "@/hooks/warmUpBrowser";
 import useFontsAndSplashScreen from "@/hooks/useFontsAndSplashScreen";
-import { tokenCache } from "@/constants/TokenCache";
+import {tokenCache} from "@/constants/TokenCache";
 import * as WebBrowser from 'expo-web-browser';
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
